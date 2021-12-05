@@ -6,9 +6,12 @@ import {
   HeartIcon,
   RssIcon,
 } from "@heroicons/react/outline";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 function Sidebar() {
+  const { data: session, status } = useSession();
+  console.log("🚀 ~ file: SideBar.js ~ line 13 ~ Sidebar ~ session", session);
+
   return (
     <div className="text-gray-500 p-5 text-sm border-r border-gray-900">
       <div className="space-y-4">
