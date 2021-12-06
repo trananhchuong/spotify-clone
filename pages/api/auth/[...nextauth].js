@@ -8,7 +8,6 @@ async function refreshAccessToken(token) {
     spotifyApi.setRefreshToken(token.refreshToken);
 
     const { body: refreshedToken } = await spotifyApi.refreshToken();
-    console.log("refreshedToken is: ", refreshedToken);
 
     return {
       ...token,
@@ -24,6 +23,10 @@ async function refreshAccessToken(token) {
       "🚀 ~ file: [...nextauth].js ~ line 10 ~ refreshAccessToken ~ error",
       error
     );
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
   }
 }
 
@@ -54,6 +57,7 @@ export default NextAuth({
         };
       }
 
+
       //return previous token if access token has not expired yet
       if (Date.now() < token.accessTokenExpires) {
         console.log("EXISTING ACCESS TOKEN IS VALID");
@@ -72,7 +76,6 @@ export default NextAuth({
     session.user.refreshToken = token.refreshToken;
     session.user.username = token.username;
 
-    
     return session;
   },
 });
